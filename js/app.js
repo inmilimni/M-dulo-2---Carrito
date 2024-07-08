@@ -53,8 +53,15 @@ function leerDatosCurso(curso){
             }
         })
         articulosCarrito = [...cursos]
+        const articulosCarritoLS = JSON.stringify(articulosCarrito);
+        localStorage.setItem('articulosC', articulosCarritoLS);
+        console.log('2')
     }else{
         articulosCarrito = [...articulosCarrito,infoCurso]
+        console.log('1')
+        console.log(articulosCarrito)
+        const articulosCarritoLS = JSON.stringify(articulosCarrito);
+        localStorage.setItem('articulosC', articulosCarritoLS);
     }
     mostrarHTML()
 }
@@ -62,6 +69,7 @@ function leerDatosCurso(curso){
 function mostrarHTML(){
 
     vaciarCarrito()
+    articulosCarrito = JSON.parse(localStorage.getItem('articulosC')) || []
     articulosCarrito.forEach(i=>{
         const row = document.createElement('tr')
         row.innerHTML =`
@@ -96,9 +104,13 @@ function eliminarCurso(e){
                     if(i.id === cursoId){
                         if(i.cantidad > 1){
                             i.cantidad--;
+                            const articulosCarritoLS = JSON.stringify(articulosCarrito);
+                            localStorage.setItem('articulosC', articulosCarritoLS);
                             return i;
                         }else{
                             articulosCarrito = articulosCarrito.filter(i => i.id !== cursoId);
+                            const articulosCarritoLS = JSON.stringify(articulosCarrito);
+                            localStorage.setItem('articulosC', articulosCarritoLS);
                             return i;
                         }
                     }
